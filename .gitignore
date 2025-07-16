@@ -1,4 +1,7 @@
 /.vscode/
 /data/
 snowbwhite.bin
-
+/cs-yychr-plugins/XaviXFormat/.vs
+/cs-yychr-plugins/XaviXFormat/bin
+/cs-yychr-plugins/XaviXFormat/obj
+/cs-yychr-plugins/XaviXFormat/CharactorLib.dll
