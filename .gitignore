@@ -5,4 +5,4 @@ snowbwhite.bin
 /cs-yychr-plugins/XaviXFormat/bin
 /cs-yychr-plugins/XaviXFormat/obj
 /cs-yychr-plugins/XaviXFormat/CharactorLib.dll
-/ghidra/Ghidra/Processors/6502/data/languages/6502.sla
+/ghidra/Ghidra/Processors/XaviX/data/languages/XaviX.sla

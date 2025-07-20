@@ -1,4 +1,4 @@
-# sleigh specification file for MOS 6502
+# sleigh specification file for MOS 6502 based XaviX Microcontroller
 
 define endian=little;
 define alignment=1;
