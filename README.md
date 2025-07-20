@@ -13,3 +13,7 @@ Lua scripts for [MAME](https://www.mamedev.org/).
 ### patches
 
 Patches for other projects that help them work with rad_sbw or provide quality of life improvements.
+
+### patterns
+
+Binary patterns for [ImHex](https://imhex.werwolv.net/) to view parts of the ROM as structured data.
