@@ -1,6 +1,7 @@
 /.vscode/
 /data/
-snowbwhite.bin
+/snowbwhite.bin
+/snowbwhite.bin.jumplist
 /cs-yychr-plugins/XaviXFormat/.vs
 /cs-yychr-plugins/XaviXFormat/bin
 /cs-yychr-plugins/XaviXFormat/obj
