@@ -6,6 +6,10 @@ Tools for Play TV Snowboarder (c)2006 Radica (rad_sbw)
 
 Plugins for [yychr](https://w.atwiki.jp/yychr/) to help it work with rad_sbw tiles.
 
+### map.xml
+
+An XML formatted map of regions in the ROM and what they contain.
+
 ### mame_scripts
 
 Lua scripts for [MAME](https://www.mamedev.org/).

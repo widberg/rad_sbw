@@ -1,0 +1,120 @@
+<entries begin="00000000" end="00400000">
+    <entry begin="00000000" end="00000300" type="tiles" format="1BPP XaviX 8x8" comment="font" />
+    <entry begin="00000300" end="00007A00" type="tiles" format="4BPP XaviX 16x16" comment="boarder sprite" />
+    <entry begin="00007E40" end="00008033" type="filler" format="0xFF" comment="filler" />
+    <entry begin="0000FFFA" end="0000FFFF" type="code" format="data" comment="vectors" />
+    <entry begin="00010000" end="00010CC0" type="tiles" format="3BPP XaviX 16x16" comment="diamond icons" />
+    <entry begin="00010CC0" end="000139C0" type="filler" format="5BPP XaviX 16x16" comment="stage thumbnails" />
+    <entry begin="000139C0" end="000166C0" type="filler" format="3BPP XaviX 16x16" comment="stats stuff" />
+    <entry begin="000166C0" end="00016EC0" type="tiles" format="4BPP XaviX 16x16" comment="oval" />
+    <entry begin="00030000" end="00036E00" type="filler" format="5BPP XaviX 16x16" comment="event type thumbnails" />
+    <entry begin="00036E00" end="00038000" type="tiles" format="4BPP XaviX 16x16" comment="xavix logo" />
+    <entry begin="0003FFF0" end="000469D0" type="sound" format="16-bit PCM really low sample rate" comment="voice lines" />
+    <entry begin="0004FAC0" end="0004FE44" type="data" format="factory_high_scores.hexpat" comment="high score data" />
+    <entry begin="0005D7C7" end="0005D948" type="filler" format="0xFF" comment="filler" />
+    <entry begin="0005DA28" end="0005DB28" type="filler" format="0x00" comment="filler" />
+    <entry begin="0005F053" end="0005F653" type="tiles" format="3BPP XaviX 16x16" comment="circles and arrows" />
+    <entry begin="000A0000" end="000B1E80" type="tiles" format="4BPP XaviX 16x16" comment="backgrounds" />
+    <entry begin="000BFAC0" end="000CFDE0" type="tiles" format="3BPP XaviX 16x16" comment="sidelines" />
+    <entry begin="000CFDE0" end="000D0000" type="filler" format="0xFF" comment="filler" />
+    <entry begin="000D0000" end="000DF660" type="tiles" format="3BPP XaviX 16x16" comment="half pipe" />
+    <entry begin="000DF660" end="000E0000" type="filler" format="0xFF" comment="filler" />
+    <entry begin="000E1E60" end="000EF6C0" type="tiles" format="3BPP XaviX 16x16" comment="more half pipe" />
+    <entry begin="000EF6C0" end="000FF2F3" type="sound" format="16-bit PCM really low sample rate" comment="voice lines" />
+    <entry begin="00100000" end="0010F100" type="tiles" format="4BPP XaviX 16x16" comment="boarder sprites" />
+    <entry begin="0010F100" end="0010F160" type="filler" format="0xFF" comment="filler" />
+    <entry begin="0010F160" end="0010FFA0" type="tiles" format="3BPP XaviX 16x16" comment="small radica logo for into" />
+    <entry begin="0010FFA0" end="00110000" type="filler" format="0xFF" comment="filler" />
+    <entry begin="00110000" end="0011EE00" type="tiles" format="4BPP XaviX 16x16" comment="boarder sprites" />
+    <entry begin="00120000" end="0012E980" type="tiles" format="4BPP XaviX 16x16" comment="boarder sprites" />
+    <entry begin="0012E980" end="00140000" type="sound" format="16-bit PCM really low sample rate" comment="cheers" />
+    <entry begin="00140000" end="00150000" type="tiles" format="4BPP XaviX 16x16" comment="boarder sprites and ramp" />
+    <entry begin="00150000" end="0015DAA3" type="sound" format="16-bit PCM really low sample rate" comment="clapping" />
+    <entry begin="0015DAA3" end="0015DCCD" type="filler" format="0xFF" comment="filler" />
+    <entry begin="00160000" end="0016DA80" type="tiles" format="4BPP XaviX 16x16" comment="boarder sprites" />
+    <entry begin="0016FFD0" end="00180000" type="sound" format="16-bit PCM really low sample rate" comment="dj voice lines" />
+    <entry begin="00180000" end="0018D780" type="tiles" format="4BPP XaviX 16x16" comment="boarder sprites" />
+    <entry begin="00190000" end="001ACF80" type="tiles" format="4BPP XaviX 16x16" comment="boarder sprites and radica logo" />
+    <entry begin="001ACF80" end="001AD344" type="filler" format="0xFF" comment="filler" />
+    <entry begin="001B0000" end="001BCF00" type="tiles" format="3BPP XaviX 16x16" comment="signs and icons" />
+    <entry begin="001C0000" end="001CCF00" type="tiles" format="4BPP XaviX 16x16" comment="boarder sprites" />
+    <entry begin="001D0000" end="001DAC00" type="tiles" format="2BPP XaviX 16x16" comment="help text" />
+    <entry begin="001DAC00" end="001DBB00" type="tiles" format="4BPP XaviX 16x16" comment="game logo" />
+    <entry begin="001DBB00" end="001DBD40" type="tiles" format="2BPP XaviX 16x16" comment="copyright" />
+    <entry begin="001DBD40" end="001DBF80" type="tiles" format="1BPP XaviX 16x16" comment="line box" />
+    <entry begin="001DBF80" end="001DCE80" type="tiles" format="4BPP XaviX 16x16" comment="flags" />
+    <entry begin="001E0000" end="001ECB00" type="tiles" format="4BPP XaviX 16x16" comment="finish line" />
+    <entry begin="001ECB00" end="001F3E80" type="sound" format="16-bit PCM really low sample rate" comment="woosh" />
+    <entry begin="001FC81D" end="00200000" type="sound" format="16-bit PCM really low sample rate" comment="sfx" />
+    <entry begin="00200000" end="00200980" type="tiles" format="4BPP XaviX 16x16" comment="menu item little boarder" />
+    <entry begin="00200980" end="00205480" type="tiles" format="3BPP XaviX 16x16" comment="event types text" />
+    <entry begin="00205480" end="0020A780" type="tiles" format="4BPP XaviX 16x16" comment="menu item" />
+    <entry begin="0020A780" end="0020C4C0" type="tiles" format="3BPP XaviX 16x16" comment="select mode" />
+    <entry begin="0020C4C0" end="0020C640" type="filler" format="0xFF" comment="filler" />
+    <entry begin="0020C640" end="00210000" type="tiles" format="2BPP XaviX 16x16" comment="small snow splashes" />
+    <entry begin="00210000" end="00219E80" type="tiles" format="4BPP XaviX 16x16" comment="snow splashes" />
+    <entry begin="00219E80" end="0021C080" type="tiles" format="2BPP XaviX 16x16" comment="small snow splashes" />
+    <entry begin="0021C080" end="0021F070" type="sound" format="16-bit PCM really low sample rate" comment="music" />
+    <entry begin="0021F080" end="0022BA80" type="tilemap?" format="?" comment="tilemap?" />
+    <entry begin="0022C6D3" end="00230080" type="sound" format="16-bit PCM really low sample rate" comment="mason voice lines" />
+    <entry begin="00230080" end="0023C680" type="tilemap?" format="?" comment="tilemap?" />
+    <entry begin="0023C810" end="00240000" type="sound" format="16-bit PCM really low sample rate" comment="horn" />
+    <entry begin="00240000" end="0024BF40" type="tilemap?" format="?" comment="tilemap?" />
+    <entry begin="0024BF40" end="00250000" type="sound" format="16-bit PCM really low sample rate" comment="voice and sfx" />
+    <entry begin="00250000" end="0025BF80" type="tiles" format="4BPP XaviX 16x16" comment="boarder sprites" />
+    <entry begin="0025BF80" end="0025FF50" type="sound" format="16-bit PCM really low sample rate" comment="music" />
+    <entry begin="0026BF1D" end="00270000" type="sound" format="16-bit PCM really low sample rate" comment="music" />
+    <entry begin="00270000" end="0027BE00" type="tiles" format="4BPP XaviX 16x16" comment="boarder sprites" />
+    <entry begin="00280000" end="0028BD80" type="tiles" format="4BPP XaviX 16x16" comment="boarder sprites" />
+    <entry begin="0028BD80" end="0028FFF0" type="sound" format="16-bit PCM really low sample rate" comment="rufus voice line" />
+    <entry begin="00290000" end="0029B4C0" type="tiles" format="3BPP XaviX 16x16" comment="menu text" />
+    <entry begin="0029B4C0" end="0029B600" type="filler" format="0xFF" comment="filler" />
+    <entry begin="0029B600" end="002A0000" type="tiles" format="2BPP XaviX 16x16" comment="numbers and graffiti" />
+    <entry begin="002A0000" end="002AB480" type="tiles" format="4BPP XaviX 16x16" comment="background" />
+    <entry begin="002B0000" end="002B0DE0" type="filler" format="3BPP XaviX 16x16" comment="stat bars and names" />
+    <entry begin="002B0DE0" end="002B6880" type="filler" format="5BPP XaviX 16x16" comment="character thumbnails" />
+    <entry begin="002B6880" end="002B7640" type="tiles" format="2BPP XaviX 16x16" comment="press enter button" />
+    <entry begin="002B7640" end="002B86C0" type="tiles" format="4BPP XaviX 16x16" comment="stance" />
+    <entry begin="002BBA0C" end="002C0000" type="sound" format="16-bit PCM really low sample rate" comment="sfx" />
+    <entry begin="002C0000" end="002CB300" type="tiles" format="4BPP XaviX 16x16" comment="background" />
+    <entry begin="002CB440" end="002CFF50" type="sound" format="16-bit PCM really low sample rate" comment="sfx" />
+    <entry begin="002D0000" end="002D3D80" type="tiles" format="3BPP XaviX 16x16" comment="score bar, combos, and board icon" />
+    <entry begin="002D3D80" end="002D91C0" type="tiles" format="2BPP XaviX 16x16" comment="score text" />
+    <entry begin="002D93C0" end="002D96C0" type="tiles" format="2BPP XaviX 16x16" comment="snowflakes" />
+    <entry begin="002D9B50" end="002D9ED0" type="tiles" format="2BPP XaviX 16x16" comment="block thing" />
+    <entry begin="002D9ED0" end="002DABF0" type="tiles" format="1BPP XaviX 16x16" comment="menu text, high score stuff, the numbers are for the rank" />
+    <entry begin="002DABF0" end="002DB1F0" type="tiles" format="3BPP XaviX 16x16" comment="event type icons" />
+    <entry begin="002DC120" end="002E0000" type="sound" format="16-bit PCM really low sample rate" comment="sfx" />
+    <entry begin="002E0000" end="002EA8C0" type="tiles" format="3BPP XaviX 16x16" comment="fans and jump pads" />
+    <entry begin="002EA8C0" end="002EAA20" type="filler" format="0xFF" comment="filler" />
+    <entry begin="002EAA20" end="002F0000" type="tiles" format="3BPP XaviX 16x16" comment="rocks" />
+    <entry begin="002F0000" end="002FA180" type="tiles" format="4BPP XaviX 16x16" comment="boarder sprites" />
+    <entry begin="00300000" end="00307500" type="tiles" format="3BPP XaviX 16x16" comment="signs and jump" />
+    <entry begin="00307500" end="0030A020" type="tiles" format="1BPP XaviX 16x16" comment="ramp and checkered flags" />
+    <entry begin="0030A140" end="0030D740" type="tiles" format="3BPP XaviX 16x16" comment="menu background" />
+    <entry begin="0030D740" end="0030F640" type="tiles" format="4BPP XaviX 16x16" comment="menu and play tv logo" />
+    <entry begin="00310000" end="00310688" type="filler" format="0x00" comment="filler" />
+    <entry begin="0031AD5E" end="0031F1ED" type="filler" format="0xFF" comment="filler" />
+    <entry begin="00320000" end="00329F80" type="tiles" format="4BPP XaviX 16x16" comment="boarder" />
+    <entry begin="00329F80" end="0032A000" type="filler" format="0xFF" comment="filler" />
+    <entry begin="0032A000" end="00330000" type="tilemap?" format="?" comment="tilemap?" />
+    <entry begin="00330000" end="00339E00" type="tiles" format="4BPP XaviX 16x16" comment="boarder" />
+    <entry begin="00339E00" end="00350000" type="filler" format="0xFF" comment="filler" />
+    <entry begin="00350000" end="00359BA0" type="tiles" format="3BPP XaviX 16x16" comment="arrow and posts" />
+    <entry begin="00360000" end="00369300" type="tiles" format="4BPP XaviX 16x16" comment="boarder" />
+    <entry begin="00369300" end="00369500" type="filler" format="0xFF" comment="filler" />
+    <entry begin="00369500" end="00379280" type="tiles" format="4BPP XaviX 16x16" comment="boarder" />
+    <entry begin="003794E0" end="00388B8A" type="sound" format="16-bit PCM really low sample rate" comment="samples and voice line" />
+    <entry begin="00388B8A" end="00388D00" type="filler" format="0xFF" comment="filler" />
+    <entry begin="00388D00" end="00390000" type="tiles" format="4BPP XaviX 16x16" comment="ramp" />
+    <entry begin="00398550" end="0039FBB0" type="sound" format="16-bit PCM really low sample rate" comment="sfx" />
+    <entry begin="003A8342" end="003A870B" type="filler" format="0xFF" comment="filler" />
+    <entry begin="003B0000" end="003B8100" type="tiles" format="4BPP XaviX 16x16" comment="boarder" />
+    <entry begin="003B8100" end="003B88D2" type="sound" format="16-bit PCM really low sample rate" comment="sample" />
+    <entry begin="003C0000" end="003C6780" type="tiles" format="4BPP XaviX 16x16" comment="snow" />
+    <entry begin="003C836E" end="003C8A14" type="filler" format="0xFF" comment="filler" />
+    <entry begin="003C8A14" end="003C9AC0" type="sound" format="16-bit PCM really low sample rate" comment="sample" />
+    <entry begin="003C9AC0" end="003CEEC0" type="tiles" format="4BPP XaviX 16x16" comment="start gate" />
+    <entry begin="003CEEC0" end="003D0000" type="tiles" format="3BPP XaviX 16x16" comment="stop light" />
+    <entry begin="003D0000" end="00400000" type="filler" format="0xFF" comment="trailing filler" />
+</entries>
