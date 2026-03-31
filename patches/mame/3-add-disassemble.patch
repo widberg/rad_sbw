@@ -1,0 +1,52 @@
+diff --git a/src/emu/debug/debugcpu.cpp b/src/emu/debug/debugcpu.cpp
+index 998f597dfec..f509a64e014 100644
+--- a/src/emu/debug/debugcpu.cpp
++++ b/src/emu/debug/debugcpu.cpp
+@@ -632,6 +632,17 @@ offs_t device_debug::bb_end_from_prev_pc()
+ 	return m_bb_prev_pc + (info & util::disasm_interface::LENGTHMASK);
+ }
+ 
++std::string device_debug::disassemble(offs_t pc)
++{
++	if (!m_bb_dasm_cache)
++		return std::string();
++	std::string result;
++	offs_t next_pc, size;
++	u32 info;
++	m_bb_dasm_cache->disassemble(pc, result, next_pc, size, info);
++	return result;
++}
++
+ void device_debug::write_tracking(address_space &space, offs_t address, u64 data)
+ {
+ 	dasm_memory_access const newAccess(space.spacenum(), address, data, m_state->pcbase());
+diff --git a/src/emu/debug/debugcpu.h b/src/emu/debug/debugcpu.h
+index e07ece8d219..ec97eb84aaf 100644
+--- a/src/emu/debug/debugcpu.h
++++ b/src/emu/debug/debugcpu.h
+@@ -86,6 +86,9 @@ public:
+ 	util::notifier<offs_t>         &bb_start_notifier() { return m_bb_start_notifier; } // fires (bb_start) when a new BB begins
+ 	util::notifier<offs_t, offs_t> &bb_end_notifier()   { return m_bb_end_notifier; }   // fires (bb_start, bb_end_exclusive) when a BB ends
+ 
++	// disassembly (only available when disasm interface is present)
++	std::string disassemble(offs_t pc);
++
+ 	template <typename Format, typename... Params>
+ 	void halt_on_next_instruction(Format &&fmt, Params &&... args)
+ 	{
+diff --git a/src/frontend/mame/luaengine_debug.cpp b/src/frontend/mame/luaengine_debug.cpp
+index 768379c4b66..a3948485dea 100644
+--- a/src/frontend/mame/luaengine_debug.cpp
++++ b/src/frontend/mame/luaengine_debug.cpp
+@@ -487,6 +487,11 @@ void lua_engine::initialize_debug(sol::table &emu)
+ 					table[wpp->index()] = sol::make_reference(sol(), wpp.get());
+ 				return table;
+ 			});
++	device_debug_type.set_function("disassemble",
++			[] (device_debug &dev, offs_t pc)
++			{
++				return dev.disassemble(pc);
++			});
+ 	device_debug_type.set_function("add_bb_start_hook",
+ 			[this] (device_debug &dev, sol::protected_function cb)
+ 			{
