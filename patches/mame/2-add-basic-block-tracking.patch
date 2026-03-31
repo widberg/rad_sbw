@@ -1,0 +1,161 @@
+diff --git a/src/emu/debug/debugcpu.cpp b/src/emu/debug/debugcpu.cpp
+index c975bdd4471..998f597dfec 100644
+--- a/src/emu/debug/debugcpu.cpp
++++ b/src/emu/debug/debugcpu.cpp
+@@ -508,6 +508,8 @@ device_debug::device_debug(device_t &device)
+ 	, m_triggered_breakpoint(nullptr)
+ 	, m_triggered_watchpoint(nullptr)
+ 	, m_trace(nullptr)
++	, m_bb_start(~offs_t(0))
++	, m_bb_prev_pc(~offs_t(0))
+ 	, m_track_pc_set()
+ 	, m_track_pc(false)
+ 	, m_comment_set()
+@@ -522,6 +524,8 @@ device_debug::device_debug(device_t &device)
+ 	device.interface(m_memory);
+ 	device.interface(m_state);
+ 	device.interface(m_disasm);
++	if (m_disasm)
++		m_bb_dasm_cache = std::make_unique<debug_disasm_buffer>(m_device);
+ 
+ 	// set up notifiers and clear the passthrough handlers
+ 	if (m_memory) {
+@@ -611,6 +615,10 @@ device_debug::device_debug(device_t &device)
+ 
+ device_debug::~device_debug()
+ {
++	// flush the in-progress basic block so bb_end_notifier fires for the last BB
++	if (m_bb_prev_pc != ~offs_t(0) && m_bb_dasm_cache)
++		m_bb_end_notifier(m_bb_start, bb_end_from_prev_pc());
++
+ 	// free breakpoints and watchpoints
+ 	breakpoint_clear_all();
+ 	watchpoint_clear_all();
+@@ -618,6 +626,12 @@ device_debug::~device_debug()
+ 	exceptionpoint_clear_all();
+ }
+ 
++offs_t device_debug::bb_end_from_prev_pc()
++{
++	u32 const info = m_bb_dasm_cache->disassemble_info(m_bb_prev_pc);
++	return m_bb_prev_pc + (info & util::disasm_interface::LENGTHMASK);
++}
++
+ void device_debug::write_tracking(address_space &space, offs_t address, u64 data)
+ {
+ 	dasm_memory_access const newAccess(space.spacenum(), address, data, m_state->pcbase());
+@@ -873,6 +887,27 @@ void device_debug::instruction_hook(offs_t curpc)
+ 		compute_debug_flags();
+ 	}
+ 
++	// fire basic block notifiers on BB boundaries (requires disasm to determine instruction length)
++	if (m_bb_dasm_cache)
++	{
++		if (m_bb_prev_pc != ~offs_t(0))
++		{
++			offs_t const seq_next = bb_end_from_prev_pc();
++			if (curpc != seq_next)
++			{
++				m_bb_end_notifier(m_bb_start, seq_next);
++				m_bb_start = curpc;
++				m_bb_start_notifier(curpc);
++			}
++		}
++		else
++		{
++			m_bb_start = curpc;
++			m_bb_start_notifier(curpc);
++		}
++		m_bb_prev_pc = curpc;
++	}
++
+ 	// are we tracking our recent pc visits?
+ 	if (m_track_pc)
+ 	{
+diff --git a/src/emu/debug/debugcpu.h b/src/emu/debug/debugcpu.h
+index 631d4c788d9..e07ece8d219 100644
+--- a/src/emu/debug/debugcpu.h
++++ b/src/emu/debug/debugcpu.h
+@@ -16,6 +16,8 @@
+ #include <set>
+ #include <utility>
+ 
++class debug_disasm_buffer;
++
+ 
+ //**************************************************************************
+ //  CONSTANTS
+@@ -80,6 +82,10 @@ public:
+ 	void go_branch(bool sense, const char *condition);
+ 	void go_next_device();
+ 
++	// basic block notifiers
++	util::notifier<offs_t>         &bb_start_notifier() { return m_bb_start_notifier; } // fires (bb_start) when a new BB begins
++	util::notifier<offs_t, offs_t> &bb_end_notifier()   { return m_bb_end_notifier; }   // fires (bb_start, bb_end_exclusive) when a BB ends
++
+ 	template <typename Format, typename... Params>
+ 	void halt_on_next_instruction(Format &&fmt, Params &&... args)
+ 	{
+@@ -171,6 +177,7 @@ private:
+ 	// internal helpers
+ 	void prepare_for_step_overout(offs_t pc);
+ 	void errorlog_write_line(const char *line);
++	offs_t bb_end_from_prev_pc();
+ 
+ 	// breakpoint and watchpoint helpers
+ 	void breakpoint_update_flags();
+@@ -256,6 +263,13 @@ private:
+ 	std::vector<memory_passthrough_handler> m_phw;      // passthrough handler reference for each space, write mode
+ 	std::vector<util::notifier_subscription> m_notifiers; // notifiers for each space
+ 
++	// basic block tracking
++	util::notifier<offs_t>         m_bb_start_notifier;  // fires (bb_start) when a new BB begins
++	util::notifier<offs_t, offs_t> m_bb_end_notifier;    // fires (bb_start, bb_end_exclusive) when a BB ends
++	offs_t                  m_bb_start;                  // start of current basic block
++	offs_t                  m_bb_prev_pc;                // previous instruction PC
++	std::unique_ptr<debug_disasm_buffer> m_bb_dasm_cache; // disasm buffer for instruction length queries
++
+ 	// pc tracking
+ 	class dasm_pc_tag
+ 	{
+diff --git a/src/frontend/mame/luaengine_debug.cpp b/src/frontend/mame/luaengine_debug.cpp
+index 992a9cc791a..768379c4b66 100644
+--- a/src/frontend/mame/luaengine_debug.cpp
++++ b/src/frontend/mame/luaengine_debug.cpp
+@@ -487,6 +487,36 @@ void lua_engine::initialize_debug(sol::table &emu)
+ 					table[wpp->index()] = sol::make_reference(sol(), wpp.get());
+ 				return table;
+ 			});
++	device_debug_type.set_function("add_bb_start_hook",
++			[this] (device_debug &dev, sol::protected_function cb)
++			{
++				return dev.bb_start_notifier().subscribe(
++						delegate<void (offs_t)>(
++							[this, cbfunc = sol::protected_function(m_lua_state, cb)] (offs_t bb_start)
++							{
++								auto status(invoke(cbfunc, bb_start));
++								if (!status.valid())
++								{
++									auto err(status.get<sol::error>());
++									osd_printf_error("[LUA ERROR] error in add_bb_start_hook callback: %s\n", err.what());
++								}
++							}));
++			});
++	device_debug_type.set_function("add_bb_end_hook",
++			[this] (device_debug &dev, sol::protected_function cb)
++			{
++				return dev.bb_end_notifier().subscribe(
++						delegate<void (offs_t, offs_t)>(
++							[this, cbfunc = sol::protected_function(m_lua_state, cb)] (offs_t bb_start, offs_t bb_end)
++							{
++								auto status(invoke(cbfunc, bb_start, bb_end));
++								if (!status.valid())
++								{
++									auto err(status.get<sol::error>());
++									osd_printf_error("[LUA ERROR] error in add_bb_end_hook callback: %s\n", err.what());
++								}
++							}));
++			});
+ 
+ 
+ 	auto breakpoint_type = sol().registry().new_usertype<debug_breakpoint>("breakpoint", sol::no_constructor);
