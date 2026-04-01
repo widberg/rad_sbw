@@ -2,6 +2,14 @@
 
 Lua scripts for MAME that can be run using `dofile` in the console window when launching MAME with `-console`.
 
+### `drcov.lua`
+
+Produces [drcov](https://dynamorio.org/page_drcov.html) 2 compatible binary coverage log files.
+
+### `mrtrace.lua`
+
+Produces a text execution log of basic block starting instructions that includes address, disassembly, and register values.
+
 ### `dumpaddressspaces.lua`
 
 Prints out all the address spaces from all of the devices and their properties.
