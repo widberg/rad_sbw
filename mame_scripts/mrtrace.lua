@@ -24,6 +24,11 @@ if not cpu.debug.disassemble then
     return
 end
 
+-- ROM region size for offset masking (same logic as drcov.lua)
+
+local bios_region = manager.machine.memory.regions[":bios"]
+local rom_mask    = (bios_region and bios_region.size or 0x400000) - 1
+
 -- open output file
 
 local f, err = io.open(OUT_FILE, "w")
@@ -61,8 +66,17 @@ local function on_bb_start(bb_start)
         end
     end
 
-    table.insert(buf, string.format("[%06X] %-16s  %s",
-        bb_start, dasm, table.concat(regs, " ")))
+    local bank = (bb_start >> 16) & 0xff
+    local pc   = bb_start & 0xffff
+    local loc
+    if bb_start < 0x800000 and (bb_start & 0x8000) == 0 then
+        loc = string.format("RAM  %02X:%04X        ", bank, pc)
+    else
+        loc = string.format("ROM  %02X:%04X  @%06X", bank, pc, bb_start & rom_mask)
+    end
+
+    table.insert(buf, string.format("[%s] %-16s  %s",
+        loc, dasm, table.concat(regs, " ")))
 
     if #buf >= FLUSH_EACH then
         flush()

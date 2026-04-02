@@ -20,12 +20,15 @@ if not cpu.debug.add_bb_end_hook then
     return
 end
 
--- module extents from address space
+-- ROM region size -> offset mask
+-- Addresses with bit 15 clear fetch from lowbus RAM (not ROM) and must be
+-- excluded.  Addresses with bit 15 set index the ROM via m_rgn[addr & mask].
 
-local prog_space   = cpu.spaces["program"]
-local addr_mask    = prog_space.address_mask
+local bios_region  = manager.machine.memory.regions[":bios"]
+local rom_size     = bios_region and bios_region.size or 0x400000
+local rom_mask     = rom_size - 1   -- works for any power-of-two ROM size
 local module_start = 0
-local module_end   = addr_mask  -- inclusive
+local module_end   = rom_mask       -- inclusive, matches ROM file extents
 
 -- BB table: start_offset → size (keep max size seen for same start)
 
@@ -36,15 +39,18 @@ local bb_count = 0
 --
 -- Fires when a BB ends: on every non-sequential PC transition and once more
 -- for the last in-progress BB when the device is destroyed.  bb_start is the
--- first instruction of the ended block; bb_end is the exclusive byte address
--- past the last instruction, computed by the MAME disassembler in C++.
+-- 24-bit program-space address (CODE_BANK<<16 | PC).
+--
+-- Lowbus filter: if bit 15 of the 24-bit address is clear the fetch came from
+-- lowbus RAM (not ROM) and has no meaningful ROM offset — skip it.
 
 local function on_bb_end(bb_start, bb_end)
-    -- clamp to module range (ignore out-of-range PCs, e.g. from helper CPUs)
-    if bb_start < module_start or bb_start > module_end then return end
+    -- skip lowbus RAM fetches: low PC *and* CODE_BANK < 0x80
+    -- (CODE_BANK >= 0x80 always fetches from ROM even for PC < 0x8000)
+    if bb_start < 0x800000 and (bb_start & 0x8000) == 0 then return end
 
-    local offset = bb_start - module_start
-    local size   = bb_end - bb_start  -- exact: C++ used disassembler to compute bb_end
+    local offset = bb_start & rom_mask
+    local size   = bb_end - bb_start  -- raw difference; bank can't change mid-block
 
     -- keep the entry; if we've seen this start before, keep max size
     local prev = bb_map[offset]

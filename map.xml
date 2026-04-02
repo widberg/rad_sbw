@@ -26,6 +26,8 @@
     <entry begin="0010F160" end="0010FFA0" type="tiles" format="3BPP XaviX 16x16" comment="small radica logo for into" />
     <entry begin="0010FFA0" end="00110000" type="filler" format="0xFF" comment="filler" />
     <entry begin="00110000" end="0011EE00" type="tiles" format="4BPP XaviX 16x16" comment="boarder sprites" />
+    <entry begin="0011EE00" end="0011EE77" type="filler" format="0xFF" comment="filler" />
+    <entry begin="0011EE77" end="00120000" type="code" format="instructions" comment="DMA'd to RAM 0x2838-0x39C0" />
     <entry begin="00120000" end="0012E980" type="tiles" format="4BPP XaviX 16x16" comment="boarder sprites" />
     <entry begin="0012E980" end="00140000" type="sound" format="16-bit PCM really low sample rate" comment="cheers" />
     <entry begin="00140000" end="00150000" type="tiles" format="4BPP XaviX 16x16" comment="boarder sprites and ramp" />
